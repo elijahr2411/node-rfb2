@@ -22,6 +22,9 @@ function RfbClient(stream, params) {
   stream.on('data', function(data) {
     cli.pack_stream.write(data);
   });
+  
+  // Emit a message when the connection closes
+  stream.on("close", () => cli.emit("close"));
 
   // TODO: check if I need that at all
   cli.pack_stream.serverBigEndian = !true;
@@ -581,6 +584,7 @@ RfbClient.prototype.updateClipboard = function(text) {
 
 // TODO: move out of rfbclient
 var fs = require('fs');
+const { Socket } = require('dgram');
 function createRfbStream(name) {
   var stream = new EventEmitter();
   var fileStream = fs.createReadStream(name);
