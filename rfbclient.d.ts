@@ -28,7 +28,8 @@ interface RfbClientArgs {
 export class RfbClient extends events.EventEmitter {
   width: number;
   height: number;
-
+  pointerEvent(x : number, y : number, mask : number) : any;
+  keyEvent(keycode : number, down : number) : any;
   requestUpdate(incremental: boolean, x: number, y: number, width: number, height: number): void;
   end(): void;
 }
